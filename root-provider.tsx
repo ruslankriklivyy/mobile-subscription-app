@@ -51,7 +51,7 @@ const RootProvider = observer(() => {
     >
       <Stack.Screen
         options={{ headerShown: true }}
-        name="Home"
+        name="My Subs"
         component={HomeScreen}
       />
 

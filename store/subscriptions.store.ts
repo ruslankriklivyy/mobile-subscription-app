@@ -1,9 +1,7 @@
 import { makeAutoObservable } from 'mobx';
-import { collection, doc, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
-import firebase, { db } from '../config/firebase';
-
-const auth = firebase.auth();
+import { db } from '../config/firebase';
 
 export interface ISubscription {
   id: string;
@@ -32,6 +30,21 @@ export class SubscriptionsStore {
       this.setLoaded(() => {
         const subscriptions = querySnapshot.docs.map((elem) => elem.data());
         this.subscriptions = subscriptions as ISubscription[];
+      });
+    } catch (err) {
+      this.setError();
+    }
+  };
+
+  createOne = async (payload: Omit<ISubscription, 'id'>) => {
+    this.setLoading();
+
+    try {
+      const subscriptionRef = doc(collection(db, 'subscriptions'));
+      await setDoc(subscriptionRef, { ...payload, id: subscriptionRef.id });
+
+      this.setLoaded(() => {
+        this.getAll();
       });
     } catch (err) {
       this.setError();

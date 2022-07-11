@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { KeyboardTypeOptions, StyleSheet } from 'react-native';
 import { FloatingLabelInput } from 'react-native-floating-label-input';
 
 interface IMyInputProp {
   value: string;
   label?: string;
   isPassword?: boolean;
+  keyboardType?: KeyboardTypeOptions;
   onChange: (value: string) => void;
 }
 
@@ -13,6 +14,7 @@ export const MyInput: React.FC<IMyInputProp> = ({
   value,
   label,
   isPassword = false,
+  keyboardType = 'default',
   onChange,
 }) => {
   const [isFocus, setIsFocus] = React.useState(false);
@@ -35,6 +37,7 @@ export const MyInput: React.FC<IMyInputProp> = ({
       onChangeText={onChange}
       value={value}
       isPassword={isPassword}
+      keyboardType={keyboardType}
       darkTheme
     />
   );
