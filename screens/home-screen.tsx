@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, Modal, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  TouchableHighlight,
+} from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { observer } from 'mobx-react-lite';
 
@@ -9,22 +15,18 @@ import { SubscriptionForm } from '../components/subscription-form';
 import { Button } from '../components/button';
 
 const HomeScreen = observer(() => {
+  const [subscriptionId, setSubscriptionId] = React.useState<string | null>(
+    null
+  );
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const {
-    subscriptionsStore: { getAll, subscriptions },
+    subscriptionsStore: { getAll, deleteOne, subscriptions },
   } = useRootStore();
 
-  const onSwipeValueChange = (swipeData: any) => {
-    const { key, value } = swipeData;
-
-    if (value <= -70) {
-      console.log('delete');
-    }
-
-    if (value >= 60) {
-      setModalVisible(true);
-    }
+  const closeModal = () => {
+    setSubscriptionId(null);
+    setModalVisible(false);
   };
 
   React.useEffect(() => {
@@ -50,15 +52,24 @@ const HomeScreen = observer(() => {
             )}
             renderHiddenItem={(data, rowMap) => (
               <View style={styles.rowBack}>
-                <View style={styles.editLeftBtn}>
+                <TouchableHighlight
+                  style={styles.editLeftBtn}
+                  onPress={() => {
+                    setSubscriptionId(data.item.id);
+                    setModalVisible(true);
+                  }}
+                >
                   <Text style={styles.textWhite}>Edit</Text>
-                </View>
-                <View style={[styles.backRightBtn, styles.backRightBtnRight]}>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                  style={[styles.backRightBtn, styles.backRightBtnRight]}
+                  onPress={() => deleteOne(data.item.id)}
+                >
                   <Text style={styles.textWhite}>Delete</Text>
-                </View>
+                </TouchableHighlight>
               </View>
             )}
-            onSwipeValueChange={onSwipeValueChange}
             leftOpenValue={65}
             rightOpenValue={-80}
           />
@@ -72,7 +83,7 @@ const HomeScreen = observer(() => {
           setModalVisible(!modalVisible);
         }}
       >
-        <SubscriptionForm />
+        <SubscriptionForm id={subscriptionId} closeModal={closeModal} />
       </Modal>
     </>
   );
@@ -113,6 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 15,
+    marginBottom: 20,
   },
 
   textWhite: {
@@ -127,7 +139,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: '55%',
-    backgroundColor: 'blue',
+    backgroundColor: '#0261FE',
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
   },

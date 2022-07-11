@@ -27,7 +27,7 @@ export const SubscriptionItem: React.FC<ISubscriptionItemProps> = ({
               color: `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`,
             }}
           >
-            {name[0]}
+            {name[0].toUpperCase()}
           </Text>
         </View>
 
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingRight: 10,
+    marginBottom: 20,
   },
 
   logoBox: {
@@ -61,8 +62,8 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -75,10 +76,15 @@ const styles = StyleSheet.create({
   },
 
   name: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
     fontSize: 22,
   },
 
   price: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
     fontSize: 22,
   },
 

@@ -11,6 +11,7 @@ interface IButtonProps {
   label?: string;
   icon?: any;
   customStyles?: any;
+  labelStyles?: any;
   type?: string;
   onPress?: () => void;
 }
@@ -21,6 +22,7 @@ export const Button: React.FC<IButtonProps> = ({
   label,
   icon,
   customStyles = {},
+  labelStyles = {},
   onPress,
 }) => {
   const transformAnim = React.useRef(new Animated.Value(0)).current;
@@ -58,7 +60,7 @@ export const Button: React.FC<IButtonProps> = ({
           },
         ]}
       >
-        <Text style={styles.btnLabel}>{label}</Text>
+        <Text style={{ ...styles.btnLabel, ...labelStyles }}>{label}</Text>
         {icon}
       </Animated.View>
     </Pressable>
