@@ -2,13 +2,13 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { observer } from 'mobx-react-lite';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { AuthLayout } from '../layouts/auth-layout';
 import { MyInput } from '../components/my-input';
 import { validationMessages } from '../utils/labels';
 import { useRootStore } from '../store/root-store.context';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 
 interface IAuthScreenProps {
@@ -53,7 +53,7 @@ export const AuthScreen: React.FC<IAuthScreenProps> = observer(({ mode }) => {
       return;
     }
 
-    navigation.navigate('Home', { id: 'Home' });
+    navigation.navigate('My Subs', { id: 'My Subs' });
     reset();
   };
 

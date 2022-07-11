@@ -52,7 +52,7 @@ const RootProvider = observer(() => {
       <Stack.Screen
         options={{ headerShown: true }}
         name="My Subs"
-        component={HomeScreen}
+        component={() => <HomeScreen />}
       />
 
       {!user && (
@@ -60,7 +60,7 @@ const RootProvider = observer(() => {
           <Stack.Screen
             options={{ headerShown: false }}
             name="WelcomeScreen"
-            component={WelcomeScreen}
+            component={() => <WelcomeScreen />}
           />
 
           <Stack.Screen

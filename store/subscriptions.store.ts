@@ -39,7 +39,7 @@ export class SubscriptionsStore {
 
       this.setLoaded(() => {
         const subscriptions = querySnapshot.docs.map((elem) => elem.data());
-        this.subscriptions = subscriptions as ISubscription[];
+        this.setSubscriptions(subscriptions as ISubscription[]);
       });
     } catch (err) {
       this.setError();
@@ -53,7 +53,9 @@ export class SubscriptionsStore {
       const q = query(collection(db, 'subscriptions'), where('id', '==', id));
       const docs = await getDocs(q);
 
-      this.subscription = docs.docs.map((doc) => doc.data())[0];
+      this.setSubscription(
+        docs.docs.map((doc) => doc.data())[0] as ISubscription
+      );
     } catch (err) {
       this.setError();
     }
@@ -86,6 +88,14 @@ export class SubscriptionsStore {
     } catch (err) {
       this.setError();
     }
+  };
+
+  setSubscriptions = (subscriptions: ISubscription[]) => {
+    this.subscriptions = subscriptions;
+  };
+
+  setSubscription = (subscription: ISubscription) => {
+    this.subscription = subscription;
   };
 
   deleteOne = async (id: string) => {

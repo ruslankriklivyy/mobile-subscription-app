@@ -21,6 +21,7 @@ export default {
       supportsTablet: true,
     },
     android: {
+      package: 'subs.app',
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#FFFFFF',
