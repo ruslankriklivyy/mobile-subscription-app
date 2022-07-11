@@ -30,6 +30,12 @@ const HomeScreen = observer(() => {
   };
 
   React.useEffect(() => {
+    if (!modalVisible) {
+      setSubscriptionId(null);
+    }
+  }, [modalVisible]);
+
+  React.useEffect(() => {
     getAll();
   }, []);
 
@@ -47,10 +53,8 @@ const HomeScreen = observer(() => {
         <View style={styles.list}>
           <SwipeListView
             data={subscriptions}
-            renderItem={({ item }, rowMap) => (
-              <SubscriptionItem subscription={item} />
-            )}
-            renderHiddenItem={(data, rowMap) => (
+            renderItem={({ item }) => <SubscriptionItem subscription={item} />}
+            renderHiddenItem={(data) => (
               <View style={styles.rowBack}>
                 <TouchableHighlight
                   style={styles.editLeftBtn}
